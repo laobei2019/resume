@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mysql://rm-bp1l2vs4t5c82702deo.mysql.rds.aliyuncs.com:3306/resume?useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: test_root
+    password: Yin654123
