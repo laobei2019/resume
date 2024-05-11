@@ -14,7 +14,7 @@
   </div>
   <div v-else>
     <el-card v-for="(data,index) in title.datas">
-      <el-button @click="title.datas.splice(index,1)">删除</el-button>
+      <el-button @click="deleteItem(index)">删除</el-button>
       <div v-for="item of titleTrans(title,index)">
         <el-space wrap>
           <el-text>{{ item.label }}</el-text>
@@ -59,6 +59,10 @@ export default {
         }
       }
       return res;
+    },
+    deleteItem(index){
+      this.title.datas.splice(index,1);
+      this.$emit('deleteItem')
     }
   }
 }

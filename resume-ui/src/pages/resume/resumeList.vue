@@ -1,7 +1,9 @@
 <template>
   <vxe-grid v-bind="gridOptions">
     <template #toolbar>
-      <vxe-button @click="editRow()">创建新简历</vxe-button>
+      <div style="display: flex; justify-content: center;">
+        <vxe-button @click="editRow()" style="width: 150px; height: 50px; background-color: #e6f7ff;"><el-icon><DocumentAdd /></el-icon>创建新简历</vxe-button>
+      </div>
     </template>
     <template #pager>
       <!--使用 pager 插槽-->
@@ -16,12 +18,12 @@
     <template #operate="{ row }">
       <vxe-button content="编辑" @click="editRow(row.id)"></vxe-button>
       <vxe-button status="danger" content="删除" @click="deleteRow(row.id)"></vxe-button>
-      <vxe-button status="primary" @click="dialogFormVisible = true;resumeId=row.id;">生成简历</vxe-button>
-      <vxe-button @click="historySHow = true;previewResumeId=row.id;">查看历史</vxe-button>
+      <vxe-button status="primary" @click="dialogFormVisible = true;resumeId=row.id;">一键生成简历</vxe-button>
+      <vxe-button @click="historySHow = true;previewResumeId=row.id;">查看修改历史</vxe-button>
     </template>
   </vxe-grid>
 
-  <vxe-modal v-model="showEdit" :title="operationId===''?'新增':'编辑'" width="100%" height="100%" :draggable="false"
+  <vxe-modal v-model="showEdit" :title="operationId===''?'新增':'编辑'" width="83%" height="100%" :draggable="false"
              v-if="showEdit">
     <resume-add :id="operationId" v-if="showEdit" @refresh="list()"></resume-add>
   </vxe-modal>
@@ -30,11 +32,12 @@
     <resume-history-view :resume-id="previewResumeId" v-if="historySHow"></resume-history-view>
   </vxe-modal>
 
-  <el-dialog v-model="dialogFormVisible" title="选择模板">
+  <el-dialog v-model="dialogFormVisible" title="选择模板" :width="'16%'">
     <el-form>
       <el-form-item label="模板" label-width="模板">
         <el-select v-model="formwork" placeholder="请选择模板">
           <el-option v-for="item in formworks" :label="item.name" :value="item.id"/>
+          
         </el-select>
       </el-form-item>
     </el-form>
@@ -81,7 +84,7 @@ const gridOptions = reactive({
   },
   data: [],
   columns: [
-    {type: 'seq', width: 60},
+    {type: 'seq', width: 60,title: ' '},
     {type: 'checkbox', width: 50},
     {field: 'name', title: '简历名称'},
     {title: '操作', slots: {default: 'operate'}}

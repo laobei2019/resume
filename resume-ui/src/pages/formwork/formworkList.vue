@@ -14,7 +14,7 @@
       </vxe-pager>
     </template>
     <template #img_default="{row}">
-      <img :src="row.image">
+      <img :src="row.image" width='200px'>
     </template>
     <template #operate="{ row }">
       <vxe-button content="编辑" @click="editRow(row.id)"></vxe-button>

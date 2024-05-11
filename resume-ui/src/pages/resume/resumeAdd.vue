@@ -1,50 +1,69 @@
 <template>
-
-  <el-row>
-    <el-col :span="2">
-      <el-affix>
-        <el-anchor :offset="70" ref="anchor">
-          <el-anchor-link v-for="(title,index) in titles" :href="`#${title.id}`" :title="title.name">
-          </el-anchor-link>
-        </el-anchor>
-      </el-affix>
-    </el-col>
-
-    <el-col :span="11">
-      <el-form-item label="简历名称">
-        <!--输入框-->
-        <el-input v-model="name"></el-input>
+  <div style=" white-space: nowrap; overflow: auto;">
+    <el-row>
+      <el-col :span="1">
+        <el-affix :offset="60">
+          <el-anchor :offset="10" ref="anchor">
+            <el-anchor-link v-for="(title,index) in titles" :href="`#${title.id}`" :title="title.name" style="width: 50px">
+            </el-anchor-link>
+            <el-col :span="10" :offset="1">
+        <el-affix :offset="60"><br><br>
+          <el-form-item label="简历名称" style="margin-left: -10px;"><br>
+            <el-input v-model="name" style="width: 200px;margin-left: -70px;"></el-input>
+          </el-form-item>
+          <el-form-item label="简历模板" style="margin-left: -10px;"><br>
+          <el-select v-model="formwork" placeholder="请选择模板" style="width: 200px;margin-left: -70px;">
+          <el-option v-for="item in formworks" :label="item.name" :value="item.id"/></el-select>
       </el-form-item>
-      <el-form-item label="简历模板">
-        <el-select v-model="formwork" placeholder="请选择模板">
-          <el-option v-for="item in formworks" :label="item.name" :value="item.id"/>
-        </el-select>
-      </el-form-item>
-      <el-card v-for="(title,index) in titles" :id="title.id" ref="anchor-div"
-               style="margin-bottom: 20px;">
-        <template #header>
-          <div class="card-header">
-            <el-row>
-              <el-col :span="2">{{ title.name }}</el-col>
-              <el-col :span="20"></el-col>
-              <el-col :span="2">
-                <span v-if="title.type==='Multiple'&&!title.active" @click="activeEdit(index)">编辑</span>
-                <span v-else-if="!title.active" @click="activeEdit(index)">编辑</span>
-              </el-col>
-            </el-row>
-          </div>
-        </template>
-        <title-form :title="title" v-if="title.active" @activeEdit="title.active=false;save()">
-        </title-form>
-        <title-view :title="title" v-else>
-        </title-view>
-      </el-card>
-    </el-col>
-    <el-col :span="11">
-      <iframe :src="iframeSrc()" style="width:100%; height:100vh;border: 0px;"
-              v-if="showPreview"></iframe>
-    </el-col>
-  </el-row>
+            </el-affix>
+            </el-col>
+            <br><br><br>选择<br>模板<br>
+            <el-icon style="font-size: 30px;"><DocumentRemove /></el-icon><br>
+            <el-icon style="font-size: 30px;"><Bottom /></el-icon><br>
+            编辑<br>信息<br>
+            <el-icon style="font-size: 30px;"><Document /></el-icon><br>
+            <el-icon style="font-size: 30px;"><Bottom /></el-icon><br>
+            保存<br>打印<br>
+            <el-icon style="font-size: 30px;"><Printer /></el-icon>
+            
+          </el-anchor>
+        </el-affix>
+      </el-col>
+      <el-col :span="10" :offset="1">
+        <el-affix :offset="60">
+    </el-affix>
+        <div style="margin-top: 20px">
+          <el-card v-for="(title,index) in titles" :id="title.id" ref="anchor-div" style="margin-bottom: 20px;margin-left: -20px;">
+            <template #header>
+              <div class="card-header">
+              <el-row>
+                <el-col :span="2">{{ title.name }}</el-col>
+                <el-col :span="16"></el-col>
+                <el-col :span="6">
+                  <el-button v-if="title.type==='Multiple'&&!title.active" @click="activeEdit(index)">编辑</el-button>
+                  <el-button v-else-if="!title.active" @click="activeEdit(index)">编辑</el-button>
+                  <el-button v-else="!title.active" @click="activeEdit(index)">退出编辑</el-button>
+                </el-col>
+              </el-row>
+            </div>
+            </template>
+            <title-form :title="title" v-if="title.active" @activeEdit="title.active=false;save()">
+            </title-form>
+            <title-view :title="title" v-else @deleteItem="save();">
+          </title-view>
+          </el-card>
+        </div>
+      </el-col>
+      <el-col :span="10" style="display: flex; align-items: flex-start;">
+        <div style="margin-top: 0px; margin-left: 20px;">
+          <el-card style="margin-bottom: 00px;">
+            
+            <iframe :src="iframeSrc()" style="width:680px; height:900px;" v-if="showPreview"></iframe>
+          </el-card>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 <script>
 import titles from '/public/titles.json';
@@ -61,17 +80,8 @@ export default {
   ],
   props: ["id", "showEdit", "formworkId"],
   mounted() {
-    this.titles = titles;
+    this.resetResume();
     let that = this;
-    if (this.id !== '' && this.id !== undefined) {
-      axios.get(`/resume/view/${this.id}`).then(function ({data}) {
-        data = data.data
-        if (data.context !== undefined) {
-          that.titles = JSON.parse(data.context);
-        }
-        that.name = data.name;
-      });
-    }
     axios.post(`/formwork?page=0&limit=99999`).then(function ({data}) {
       that.formworks = data.data.records;
     });
@@ -93,9 +103,13 @@ export default {
     log: function () {
       console.log(this.titles);
     }, activeEdit: function (index) {
+      this.$refs.anchor.scrollTo(`#${this.titles[index].id}`)
       this.titles[index].active ^= true;
       if (this.titles[index].type === 'Multiple') {
-        this.titles[index].datas.push({});
+        if(this.titles[index].active!==0) this.titles[index].datas.push({});
+        else {
+          this.titles[index].datas.pop();
+        }
       }
     }, save: function () {
       this.showPreview=false;
@@ -115,6 +129,18 @@ export default {
       let id = this.id || this.dataId;
       if (this.formwork === '' || id == '' || id === undefined || this.formwork === undefined) return '';
       return `http://localhost:8080/resume/preview/${id}/${this.formwork}`
+    }, resetResume:function (){
+      this.titles = titles;
+      let that = this;
+      if (this.id !== '' && this.id !== undefined) {
+        axios.get(`/resume/view/${this.id}`).then(function ({data}) {
+          data = data.data
+          if (data.context !== undefined) {
+            that.titles = JSON.parse(data.context);
+          }
+          that.name = data.name;
+        });
+      }
     }
   }
 }

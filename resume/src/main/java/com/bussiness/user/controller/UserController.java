@@ -94,4 +94,16 @@ public class UserController extends BaseController<UserService, User> {
         }
         return ResponseData.success("导入成功");
     }
+
+    @PostMapping("updatePassword")
+    public ResponseData updatePassword(@RequestBody User user) {
+         User dbUser = service.getById(user.getId());
+         if(dbUser.getPassword().equals(user.getPassword())){
+             dbUser.setPassword(request.getParameter("pwd"));
+             service.saveOrUpdate(dbUser);
+             return ResponseData.success("修改密码成功");
+         }
+        return ResponseData.success("旧密码输入错误，请重试");
+    }
+
 }

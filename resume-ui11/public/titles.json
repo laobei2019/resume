@@ -1,0 +1,129 @@
+[
+  {
+    "id": "baseInfo",
+    "name": "基本信息",
+    "type": "Single",
+    "formItems": [
+      {
+        "label": "姓名",
+        "type": "input"
+      },
+      {
+        "label": "性别",
+        "type": "radio",
+        "dict": "男,女"
+      },
+      {
+        "label": "手机号",
+        "type": "input"
+      },
+      {
+        "label": "邮箱",
+        "type": "input"
+      },
+      {
+        "label": "生日",
+        "type": "date"
+      }
+    ],
+    "active": false,
+    "datas": [],
+    "hide": false
+  },
+  {
+    "id": "jobSearch",
+    "name": "求职意向",
+    "type": "Single",
+    "formItems": [
+      {
+        "label": "期望职位",
+        "type": "input"
+      },
+      {
+        "label": "期望地点",
+        "type": "input"
+      },
+      {
+        "label": "期望月薪",
+        "type": "input"
+      },
+      {
+        "label": "求职状态",
+        "type": "input"
+      }
+    ],
+    "active": false,
+    "datas": [],
+    "hide": false
+  },
+  {
+    "id": "education",
+    "name": "教育背景",
+    "type": "Multiple",
+    "formItems": [
+      {
+        "label": "学校名称",
+        "type": "input"
+      },
+      {
+        "label": "学院名称",
+        "type": "input"
+      },
+      {
+        "label": "主修专业",
+        "type": "input"
+      },
+      {
+        "label": "学历",
+        "type": "select",
+        "dict": "博士,硕士,本科,专科,中专,高中,初中,小学,MBA,MPA,EMBA,大专,中技,其他"
+      },
+      {
+        "label": "就读时间",
+        "type": "rangeDate"
+      }
+    ],
+    "active": false,
+    "datas": [],
+    "hide": false
+  },
+  {
+    "id": "workExperience",
+    "name": "工作经历",
+    "type": "Multiple",
+    "formItems": [
+      {
+        "label": "公司名称",
+        "type": "input"
+      },
+      {
+        "label": "职位名称",
+        "type": "input"
+      },
+      {
+        "label": "就职时间",
+        "type": "rangeDate"
+      },
+      {
+        "label": "工作类型",
+        "type": "select",
+        "dict": "实习,全职,兼职"
+      },
+      {
+        "label": "详细内容",
+        "type": "textarea"
+      }
+    ],
+    "active": false,
+    "datas": [],
+    "hide": false
+  },
+  {
+    "id": "selfEvaluate",
+    "name": "自我评价",
+    "type": "None",
+    "text": "",
+    "active": false,
+    "hide": false
+  }
+]
