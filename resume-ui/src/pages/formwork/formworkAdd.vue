@@ -1,47 +1,50 @@
 <template>
-  <el-form :model="form" label-width="auto" style="max-width: 600px">
+  <el-form :model="form">
     <el-form-item label="模板名称">
-      <el-input v-model="form.name"/>
+      <el-input v-model="form.name" style="width: 300px;"/>
     </el-form-item>
-    <el-form-item label="模板">
-      <el-upload
-          action="http://localhost:8080/file/upload"
-          :before-upload="beforeUpload"
-          :on-success="uploadSuccess"
-          :on-preview="previewFile"
-          accept=".doc,.docx"
-          limit="1"
-          v-model:file-list="form.fileList"
-      >
-        <el-button type="primary">上传</el-button>
-        <template #tip>
-          <div class="el-upload__tip">
-            只允许上传doc或docx文件
-          </div>
-        </template>
-      </el-upload>
-    </el-form-item>
-    <el-form-item label="预览图">
-      <el-upload
-          action="http://localhost:8080/file/upload"
-          :on-success="uploadImageSuccess"
-          accept="png"
-          limit="1"
-          v-model:file-list="form.imageList"
-      >
-        <el-button type="primary">上传</el-button>
-        <template #tip>
-          <div class="el-upload__tip">
-            请上传图片
-          </div>
-        </template>
-      </el-upload>
-    </el-form-item>
-
-    <el-form-item>
-      <el-button type="primary" @click="save()">保存</el-button>
-    </el-form-item>
+    <el-row>
+      <el-col :span="12">
+        <el-form-item label="模板" style="width: 200px;margin-left: 50px; background-color: #f5f7fa;padding: 30px;">
+          <el-upload
+              action="http://localhost:8080/file/upload"
+              :before-upload="beforeUpload"
+              :on-success="uploadSuccess"
+              :on-preview="previewFile"
+              accept=".doc,.docx"
+              limit="1"
+              v-model:file-list="form.fileList"
+          >
+            <el-button type="primary">上传</el-button>
+            <template #tip>
+              <div class="el-upload__tip">
+                只允许上传doc或docx文件
+              </div>
+            </template>
+          </el-upload>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="预览图" style="width: 200px;margin-right: 100px; background-color: #f5f7fa;padding: 30px;">
+          <el-upload
+              action="http://localhost:8080/file/upload"
+              :on-success="uploadImageSuccess"
+              accept="png"
+              limit="1"
+              v-model:file-list="form.imageList"
+          >
+            <el-button type="primary">上传</el-button>
+            <template #tip>
+              <div class="el-upload__tip">
+                请上传图片
+              </div>
+            </template>
+          </el-upload>
+        </el-form-item>
+      </el-col>
+    </el-row>
   </el-form>
+      <el-button type="primary" style="margin-left: 300px;margin-top: auto;" @click="save()">保存</el-button>
 </template>
 <script>
 import resumeForm from "@/components/resume-form.vue";

@@ -1,8 +1,8 @@
 <template>
   <vxe-grid v-bind="gridOptions">
-    <template #toolbar>
-      <vxe-button @click="editRow()">新增</vxe-button>
-    </template>
+    <template #toolbar ><div style="text-align: center;">
+      <vxe-button @click="editRow()" style="width: 150px; height: 50px; background-color: #e6f7ff;"><el-icon><DocumentAdd /></el-icon>添加简历模板</vxe-button>
+    </div></template>
     <template #pager>
       <!--使用 pager 插槽-->
       <vxe-pager
@@ -17,13 +17,13 @@
       <img :src="row.image" width='200px'>
     </template>
     <template #operate="{ row }">
-      <vxe-button content="编辑" @click="editRow(row.id)"></vxe-button>
-      <vxe-button status="danger" content="删除" @click="deleteRow(row.id)"></vxe-button>
+      <formwork-add :id="row.id" @saveSuccess="list()"></formwork-add>
+      <vxe-button status="danger" content="删除" @click="deleteRow(row.id)"style="margin-left: 40px;"></vxe-button>
     </template>
   </vxe-grid>
 
-  <vxe-modal v-model="showEdit" :title="operationId===''?'新增':'编辑'" width="80%" height="80%" :draggable="false"
-             v-if="showEdit">
+  <vxe-modal v-model="showEdit" :title="operationId===''?'新增':'编辑'" width="40%" height="40%" :draggable="false"
+             v-if="showEdit" style="margin-left: -300px;margin-top: 500px;">
     <formwork-add :id="operationId" @saveSuccess="showEdit=false;list()"></formwork-add>
   </vxe-modal>
 </template>
@@ -58,8 +58,8 @@ const gridOptions = reactive({
   columns: [
     {type: 'seq', width: 60},
     {type: 'checkbox', width: 50},
-    {field: 'name', title: '模板名称'},
-    {field: 'img', title: '模板预览',slots: {"default":"img_default"}},
+    {field: 'name', title: '模板名称',width:200},
+    {field: 'img', title: '模板预览',width:400,slots: {"default":"img_default"}},
     {title: '操作', slots: {default: 'operate'}}
   ]
 })

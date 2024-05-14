@@ -40,8 +40,12 @@ public class UserController extends BaseController<UserService, User> {
 
     @PostMapping("register")
     public ResponseData register(@RequestBody User user) {
-        service.save(user);
-        return ResponseData.success("注册成功");
+        try {
+            service.save(user);
+            return ResponseData.success("注册成功");
+        } catch (Exception e) {
+            return ResponseData.fail("账号已被使用，注册失败");
+        }
     }
 
     @GetMapping("do_download")

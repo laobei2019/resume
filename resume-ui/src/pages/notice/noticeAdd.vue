@@ -1,7 +1,7 @@
 <template>
   <resume-form :form-items :data="form"></resume-form>
   <div style="display: grid;place-items: center;">
-    <vxe-button @click="save()">保存</vxe-button>
+    <vxe-button @click="save()">发布</vxe-button>
   </div>
 </template>
 <script>
