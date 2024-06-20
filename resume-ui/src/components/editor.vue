@@ -18,7 +18,6 @@ import '@wangeditor/editor/dist/css/style.css';
 import {reactive, shallowRef, watch, onBeforeUnmount} from 'vue';
 import {Toolbar, Editor} from '@wangeditor/editor-for-vue';
 
-// 定义父组件传过来的值
 const props = defineProps({
   // 内容框默认 placeholder
   placeholder: {
